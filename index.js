@@ -11,8 +11,8 @@
 
   // Query selector helper
   function $(selector) {
-    var query = exports.document.querySelectorAll;
-    return [].slice.call(query(selector));
+    var lookup = exports.document.querySelectorAll(selector);
+    return [].slice.call(lookup);
   };
 
   /**
@@ -41,9 +41,11 @@
    *
    * Ps.: this function mutates `store`.
    * */
-  function register(component, implementation) {
-    list[component] = implementation;
-    return list;
+  function register(component, implementation, callback) {
+    console.log('register new component');
+    store[component] = implementation;
+    callback();
+    return store;
   }
 
   function mount(properties, options) {
@@ -79,12 +81,24 @@
   }
 
   function components() {
-    var selector = '[data-component]';
     var sandbox = {
       get: function(id) {
         return sandbox[id];
+      },
+
+      set: function(id, value) {
+        return register(id, value, function() {
+          return update(sandbox);
+        });
       }
     };
+
+    return update(sandbox);
+  }
+
+  // Lookup for components to bootstrap on the current context
+  function update(sandbox) {
+    var selector = '[data-component]';
 
     // Loop through all `selector` occurrences and bootup components found
     $(selector).forEach(function(node, index) {
