@@ -11,7 +11,7 @@ $ npm install data-components --save
 ## Motivation
 
 There are plenty of options to architect a web application but often they're complex or assume you're working on a SPA.
-I just wanted a simple and flexible componentized structure for non SPA projects, so I built `data-components`.
+I just wanted a simple and flexible structure for non SPA projects, so I built this.
 
 ## Usage
 
