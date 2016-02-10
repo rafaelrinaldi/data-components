@@ -1,6 +1,13 @@
+[spa]: https://en.wikipedia.org/wiki/Single-page_application
+[url]: http://rinaldi.io
+[first-draft]: https://gist.github.com/rafaelrinaldi/cf0c3851070cd935ef55
+[module]: https://github.com/fnando/module
+[piecemaker]: https://github.com/jcemer/piecemaker
+[custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
+
 # data-components
 
-> Simple structure to manage components for non SPA projects
+> Simple structure to manage components for non [SPA][spa] projects
 
 ## Install
 
@@ -10,8 +17,8 @@ $ npm install data-components --save
 
 ## Motivation
 
-There are plenty of options to architect a web application but often they're complex or assume you're working on a SPA.
-I just wanted a simple and flexible structure for non SPA projects, so I built this.
+There are plenty of options to architect a web application out there but most are complex or assume you're working on a [SPA][spa].
+I just wanted a simple and flexible structure for non [SPA][spa] projects, so I built this.
 
 ## Usage
 
@@ -22,7 +29,7 @@ One of the greatest advantages behind following a component structure is that yo
 On your application entry point, simply call the component bootstrap function. Here we're saving a reference on the global scope so we can later reference it:
 
 ```js
-import components from 'data-components';
+const components = require('data-components');
 
 // Create a `UI` namespace
 window.UI = components();
@@ -46,24 +53,41 @@ Now you need an implementation for your component:
 
 ```js
 class List {
-  constructor() {
-    // ...
-  }
-
-  // Automatically called
-  initialize(node, options) {
+  constructor(node, options) {
     console.log(`Bootstrapping list that toggle its visibility on "${options.toggle}" event`);
   }
 };
 ```
 
-It's that simple. On the `initialize()` method you'll receive a reference for the component markup and its options (`data-*`).
+It's that simple. On the "constructor" you'll receive a reference for the component markup and its options (passed along as data attributes).
+
+### Registering components
+
+There are two ways of registering components:
+
+```js
+// Import all components
+const List = require('./components/list');
+const Dropdown = require('./components/dropdown');
+const Table = require('./components/table');
+
+// While bootstraping them
+const UI = components({
+  'list': List,
+  'dropdown': Dropdown
+});
+
+// On runtime (lazy loading)
+UI.set('table', Table);
+```
+
+If you choose to register a component via `set()` it'll automatically perform a lookup on the current context and see if there's need to bootstrap the newly registered component.
 
 ### Accessing components
 
 Every time a component is mounted, it'll save the instance to its own sandbox. In our case this sandbox is the value of `window.UI`.
 
-It's really just a plain object but it comes with a handy `get()` method for accessing registered components:
+To access a component, use the `get()` method exposed by the sandbox:
 
 ```js
 UI.get('list'); //=> List {}
@@ -100,16 +124,18 @@ UI.get('school'); //=> List {}
 
 This is obviously no wildcard and really there are better options out there if you're working on a SPA, but it sure helps to keep an organized codebase.
 
-I started playing with this idea [a while ago](https://gist.github.com/rafaelrinaldi/cf0c3851070cd935ef55) and I'm already successfully using it in two production projects (with more than two developers besides myself).
+Ideally [Custom Elements][custom-elements] would solve this in a very elegant way but I haven't found any solution that don't rely either on hacky implementation or a giant runtime (looking at you Polymer).
+
+I started playing with this idea [a while ago][first-draft] and I'm already successfully using it in two production projects (with more than two developers besides myself).
 
 ## Related
 
 Other great options available that I have personally tried in the past and kinda share the same ideas behind this project:
 
-* [Module](https://github.com/fnando/module)
-* [Piecemaker](https://github.com/jcemer/piecemaker)
-* [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements)
+* [Module][module]
+* [Piecemaker][piecemaker]
+* [Custom Elements][custom-elements]
 
 ## License
 
-MIT © [Rafael Rinaldi](http://rinaldi.io)
+MIT © [Rafael Rinaldi][url]
