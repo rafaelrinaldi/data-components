@@ -104,7 +104,7 @@ I started playing with this idea [a while ago](https://gist.github.com/rafaelrin
 
 ## Related
 
-Other great options available that I have personally tried in the past and kinda share the same ideas behind `data-components`:
+Other great options available that I have personally tried in the past and kinda share the same ideas behind this project:
 
 * [Module](https://github.com/fnando/module)
 * [Piecemaker](https://github.com/jcemer/piecemaker)
