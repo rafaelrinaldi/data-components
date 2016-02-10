@@ -108,6 +108,7 @@ Other great options available that I have personally tried in the past and kinda
 
 * [Module](https://github.com/fnando/module)
 * [Piecemaker](https://github.com/jcemer/piecemaker)
+* [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements)
 
 ## License
 
