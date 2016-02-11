@@ -156,6 +156,10 @@ Ideally [Custom Elements][custom-elements] would solve this in a very elegant wa
 
 I started playing with this idea [a while ago][first-draft] and I'm already successfully using it in two production projects (with more than two developers besides myself).
 
+## FAQ
+
+Before creating an issue, please make sure you read the [FAQ](/FAQ.md) first.
+
 ## Related
 
 Other great options available that I have personally tried in the past and kinda share the same ideas behind this project:
