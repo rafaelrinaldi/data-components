@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>data-components</title>
+  <link rel="stylesheet" href="//cdn.rawgit.com/jgthms/bulma/master/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <style>
+    body, html {
+      width: 100%;
+      height: 100%;
+    }
+
+    .columns {
+      padding: 3rem;
+    }
+
+    .column {
+      margin: 0 auto;
+    }
+
+    .button {
+      transition: background 0.35s linear;
+    }
+
+    .input.is-danger {
+      border-color: #EF786E;
+    }
+
+    .input.is-danger + i {
+      color: #EF786E !important;
+    }
+
+    .input.is-success {
+      border-color: #A1D381;
+    }
+
+    .notification {
+      opacity: 0;
+      transition: opacity 0.15s linear 0.45s;
+    }
+
+    fieldset {
+      transform: translateY(-80px);
+      transition: transform 0.35s ease;
+    }
+
+    form.is-success fieldset {
+      transform: translateY(0);
+    }
+
+    form.is-success .notification {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero is-primary is-medium">
+    <div class="hero-content">
+      <h1 class="title">Contact form</h1>
+      <h2 class="subtitle">Simple contact form used as an example of how <code>data-components</code> can be used</h2>
+    </div>
+  </header>
+
+  <div class="container columns">
+    <form class="column is-6" data-component="form">
+      <h3 class="title is-5">Please, fill the form with your information</h3>
+
+      <fieldset>
+        <div class="notification is-primary">
+          <button class="delete"></button>
+          Ok, your email has been sent and soon enough you'll be in touch!
+        </div>
+
+        <p class="control is-withicon">
+          <input type="email" class="input" placeholder="you@email.com" data-component="email-input" data-min=5>
+          <i class="fa fa-envelope"></i>
+        <p>
+
+        <p class="control">
+          <textarea class="textarea" placeholder="Your message here"></textarea>
+        </p>
+
+        <p class="control">
+          <button type="submit" class="button is-primary is-medium" data-component="submit-form" data-success-text="Success!">
+            <i class="fa fa-check"></i>
+            Submit
+          </button>
+          <button type="reset" class="button is-medium is-danger is-outlined">
+            <i class="fa fa-times"></i>
+            Cancel
+          </button>
+        </p>
+      </fieldset>
+    </form>
+  </div>
+  <script src="./dist/index.min.js"></script>
+  <script>
+    /**
+     * SubmitForm
+     * Dynamic button that displays the current status of our form
+     **/
+    function SubmitForm(node, options, sandbox) {
+      this.node = node;
+      this.options = options;
+      this.sandbox = sandbox;
+      this.originalText = node.innerHTML;
+
+      node.addEventListener('click', function(event) {
+        this.send();
+        event.stopPropagation();
+        event.preventDefault();
+      }.bind(this));
+    }
+
+    SubmitForm.prototype.send = function() {
+      this.reset();
+      this.node.classList.add('is-loading');
+      setTimeout(this.sent.bind(this), 2500);
+    };
+
+    SubmitForm.prototype.sent = function() {
+      this.node.classList.add('is-success');
+      this.node.classList.remove('is-loading');
+      this.node.innerHTML = this.options.successText;
+      this.sandbox.get('form').success();
+//      this.sandbox.get('form').success();
+      setTimeout(this.reset.bind(this), 2000);
+    };
+
+    SubmitForm.prototype.reset = function() {
+      this.node.classList.remove('is-success');
+      this.node.innerHTML = this.originalText;
+    };
+
+    /**
+     * EmailInput
+     * Simple email input that knows how to validate a real email
+     **/
+    function EmailInput(node, options) {
+      this.node = node;
+      this.options = options;
+
+      node.addEventListener('keyup', function(event) {
+        this.update(this.node.value);
+      }.bind(this));
+    }
+
+    EmailInput.prototype.update = function(input) {
+      if (!this.isValid(input)) {
+        this.whenInvalid();
+      } else {
+        this.whenValid();
+      }
+    };
+
+    EmailInput.prototype.isValid = function(input) {
+      return (input.length > this.options.min) && /@/.test(input) && /\./.test(input);
+    };
+
+    EmailInput.prototype.whenInvalid = function() {
+      this.node.classList.add('is-danger');
+    };
+
+    EmailInput.prototype.whenValid = function() {
+      this.node.classList.remove('is-danger');
+    };
+
+    /**
+     * Form
+     * The actual form component
+     **/
+
+    function Form(node) {
+      this.node = node;
+    }
+
+    Form.prototype.success = function() {
+      this.node.classList.add('is-success');
+    };
+
+    var UI = components({
+      'submit-form': SubmitForm,
+      'email-input': EmailInput,
+      'form': Form
+    });
+  </script>
+</body>
+</html>
