@@ -81,7 +81,7 @@
 
     // Create new component instance
     var Component = store[id];
-    var instance = new Component(node, options);
+    var instance = new Component(node, options, properties.sandbox);
 
     // Save the component instance to sandbox
     properties.sandbox[exports ? exports : id] = instance;
