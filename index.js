@@ -6,7 +6,7 @@
 (function(exports) {
   'use strict';
 
-  // Mutable component store
+  // Component store
   var store = {};
 
   // Query selector helper
@@ -16,36 +16,51 @@
   };
 
   /**
+   * Own implementation of `Object.assign` that works in all browsers.
+   * Note that it only does shallow copies.
+   **/
+  function mixin(target, source) {
+    var from;
+    var to = target;
+    var index = 0;
+    var total = arguments.length;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+    while(++index < total){
+      from = arguments[index];
+
+      if (from != null) {
+        for(var key in from) {
+          if (hasOwnProperty.call(from, key)) {
+            to[key] = from[key];
+          }
+        }
+      }
+    }
+
+    return to;
+  }
+
+  /**
    * Register a new component to the components store.
    * For ES5 projects, use prototypes to simulate classes:
    *
-   *    function MyComponent() {
-   *      // ...
-   *    }
-   *
-   *    MyComponent.prototype.initialize = function(node, options) {
+   *    function MyComponent(node, options) {
    *      // Bootstrap component
-   *    };
+   *    }
    *
    * In ES2015 you're can use actual classes:
    *
    *    class MyComponent {
-   *      constructor() {
-   *        // ...
-   *      }
-   *
-   *      initialize(node, options) {
+   *      constructor(node, options) {
    *        // Bootstrap component
    *      }
    *    }
-   *
-   * Ps.: this function mutates `store`.
    * */
-  function register(component, implementation, callback) {
-    console.log('register new component');
-    store[component] = implementation;
-    callback();
-    return store;
+  function register(component, implementation) {
+    var newStore = {};
+    newStore[component] = implementation;
+    return mixin(store, newStore);
   }
 
   function mount(properties, options) {
@@ -66,9 +81,6 @@
     var Component = store[id];
     var instance = new Component(node, options);
 
-    // Export component instance to the sandbox
-    sandbox[exports ? exports : id] = instance;
-
     return instance;
   }
 
@@ -83,13 +95,12 @@
   function components() {
     var sandbox = {
       get: function(id) {
-        return sandbox[id];
+        return store[id];
       },
 
       set: function(id, value) {
-        return register(id, value, function() {
-          return update(sandbox);
-        });
+        store = register(id, value);
+        update(sandbox);
       }
     };
 
