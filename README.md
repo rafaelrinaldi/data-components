@@ -33,7 +33,7 @@ On your application entry point, simply call the component bootstrap function. H
 ```js
 const components = require('data-components');
 
-// Create a `UI` namespace
+// Create a `UI` namespace and expose it globally
 window.UI = components();
 ```
 
@@ -55,13 +55,41 @@ Now you need an implementation for your component:
 
 ```js
 class List {
-  constructor(node, options) {
+  constructor(node, options, sandbox) {
     console.log(`Bootstrapping list that toggle its visibility on "${options.toggle}" event`);
   }
 };
 ```
 
 It's that simple. On the "constructor" you'll receive a reference for the component markup and its options (passed along as data attributes).
+
+### Messaging
+
+Since all components receive a reference for their own sandbox, you can use it to make components talk to each other:
+
+```js
+class Beep {
+  constructor(node, options, sandbox) {
+    sandbox.get('bop').greet('Hello from beep!');
+  }
+}
+
+class Bop {
+  constructor(node, options, sandbox) {
+    sandbox.get('beep').greet('Hello from bop!');
+  }
+}
+
+const UI = components({
+  'beep': Beep,
+  'bop': Bop
+});
+
+//=> Hello from beep!
+//=> Hello from bop!
+```
+
+Maybe in the future we can think of adding a pub/sub mechanism but from whay I have used so far the current approach got me covered.
 
 ### Registering components
 
