@@ -58,15 +58,14 @@
    *    }
    * */
   function register(component, implementation) {
-    var newStore = {};
-    newStore[component] = implementation;
-    return mixin(store, newStore);
+    var newItem = {};
+    newItem[component] = implementation;
+    return mixin(store, newItem);
   }
 
   function mount(properties, options) {
     // Component properties
     var id = properties.id;
-    var sandbox = properties.sandbox;
     var node = properties.node;
 
     // Component options
@@ -81,7 +80,8 @@
     var Component = store[id];
     var instance = new Component(node, options);
 
-    return instance;
+    // Save the component instance to sandbox
+    properties.sandbox[exports ? exports : id] = instance;
   }
 
   function isRegisteredComponent(component) {
@@ -92,10 +92,38 @@
               });
   }
 
-  function components() {
+  // Lookup for components to bootstrap on the current context
+  function update(sandbox) {
+    var selector = '[data-component]';
+
+    // Loop through all `selector` occurrences and bootup components found
+    $(selector).forEach(function(node, index) {
+      /**
+      * `dataset` has its own type (`DOMStringMap`) so we convert it to an
+      * actual `Object`.
+      **/
+      var options = mixin({}, node.dataset);
+
+      mount({
+        sandbox: sandbox,
+        node: node,
+        index: index,
+        id: options.component
+      }, options);
+    });
+
+    return sandbox;
+  }
+
+  function components(presets) {
+    // Add pre defined components to the store if there are any
+    if (presets && typeof presets === 'object') {
+      store = mixin(store, presets);
+    }
+
     var sandbox = {
       get: function(id) {
-        return store[id];
+        return this[id];
       },
 
       set: function(id, value) {
@@ -104,25 +132,9 @@
       }
     };
 
+    console.log(store);
+    console.log(store['button']);
     return update(sandbox);
-  }
-
-  // Lookup for components to bootstrap on the current context
-  function update(sandbox) {
-    var selector = '[data-component]';
-
-    // Loop through all `selector` occurrences and bootup components found
-    $(selector).forEach(function(node, index) {
-      mount({
-        sandbox: sandbox,
-        node: node,
-        index: index,
-        id: node.dataset.component,
-        options: node.dataset
-      });
-    });
-
-    return sandbox;
   }
 
   // UMD export
