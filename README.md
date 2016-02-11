@@ -9,8 +9,6 @@
 
 > Simple structure to manage components for non [SPA][spa] projects
 
-Check out the [demo](http://rafaelrinaldi.github.io/data-components).
-
 ## Install
 
 ```sh
