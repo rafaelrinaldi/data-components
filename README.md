@@ -5,7 +5,7 @@
 [piecemaker]: https://github.com/jcemer/piecemaker
 [custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
 
-# data-components ![Unstable](https://img.shields.io/badge/stability-unstable-yellow.svg?style=flat-square)
+# data-components [![Unstable](https://img.shields.io/badge/stability-unstable-yellow.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
 
 > Simple structure to manage components for non [SPA][spa] projects
 
