@@ -1,7 +1,7 @@
 {
   "name": "data-components",
   "main": "index.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple structure to manage components for non SPA projects",
   "license": "MIT",
   "repository": "rafaelrinaldi/data-components",
