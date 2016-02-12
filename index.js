@@ -76,7 +76,7 @@
 
     if (!isRegisteredComponent(id)) {
       console.warn('No implementation found for component "' + id + '"');
-      return null;
+      return;
     }
 
     // Create new component instance
@@ -132,6 +132,10 @@
       set: function (id, value) {
         store = register(id, value);
         update(sandbox);
+      },
+
+      update: function () {
+        return update(this);
       }
     };
 
