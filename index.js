@@ -148,4 +148,4 @@
   } else {
     exports.components = components;
   }
-})(this);
+})(window);
