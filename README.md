@@ -1,12 +1,13 @@
 [custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
 [demo-url]: https://rafaelrinaldi.github.io/data-components
+[dist-url]: https://rawgit.com/rafaelrinaldi/data-components/master/dist/index.min.js
 [first-draft]: https://gist.github.com/rafaelrinaldi/cf0c3851070cd935ef55
 [module]: https://github.com/fnando/module
 [piecemaker]: https://github.com/jcemer/piecemaker
 [spa]: https://en.wikipedia.org/wiki/Single-page_application
 [url]: http://rinaldi.io
 
-# data-components [![Unstable](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
+# data-components [![Experimental](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
 
 > Tiny component structure for web applications
 
@@ -15,6 +16,8 @@
 ```sh
 $ npm install data-components --save
 ```
+
+<sup>Or you can simply copy and paste the [minified standalone version that lives under `dist/`][dist-url]</sup>
 
 ## Motivation
 
