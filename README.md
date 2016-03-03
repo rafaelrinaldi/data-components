@@ -1,6 +1,6 @@
 [custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
 [demo-url]: https://rafaelrinaldi.github.io/data-components
-[dist-url]: https://rawgit.com/rafaelrinaldi/data-components/master/dist/index.min.js
+[dist-url]: https://raw.githubusercontent.com/rafaelrinaldi/data-components/master/dist/index.min.js
 [first-draft]: https://gist.github.com/rafaelrinaldi/cf0c3851070cd935ef55
 [module]: https://github.com/fnando/module
 [piecemaker]: https://github.com/jcemer/piecemaker
