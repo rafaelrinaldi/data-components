@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 'use strict';
 
 /**
@@ -20,7 +22,7 @@ function Controls(node, options, sandbox) {
    * for the "list" component as a new product.
    * Reset the input afterwards.
    */
-  input.addEventListener('keyup', function(event) {
+  input.addEventListener('keyup', function (event) {
     if (event.keyCode === 13) { // 13 → Enter
       list.add(input.value);
       reset(input);
@@ -32,7 +34,7 @@ function Controls(node, options, sandbox) {
    * click.
    * Will also reset the input afterwards.
    */
-  add.addEventListener('click', function() {
+  add.addEventListener('click', function () {
     list.add(input.value);
     reset(input);
   });
@@ -40,14 +42,14 @@ function Controls(node, options, sandbox) {
   /**
    * Simply calls the "cleanup" method of "list" public API.
    */
-  clean.addEventListener('click', function() {
+  clean.addEventListener('click', function () {
     list.cleanup();
   });
 
   /**
    * Simply calls the "removeAll" method of "list" public API.
    */
-  remove.addEventListener('click', function() {
+  remove.addEventListener('click', function () {
     list.removeAll();
   });
 }
@@ -59,3 +61,5 @@ function reset(input) {
   input.focus();
   input.value = '';
 }
+
+/* eslint-enable */
