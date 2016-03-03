@@ -25,7 +25,7 @@ function Controls(node, options, sandbox) {
       list.add(input.value);
       reset(input);
     }
-  }.bind(this));
+  });
 
   /**
    * Same action as if the user hits the enter key, but triggered via a button
@@ -35,7 +35,7 @@ function Controls(node, options, sandbox) {
   add.addEventListener('click', function() {
     list.add(input.value);
     reset(input);
-  }.bind(this));
+  });
 
   /**
    * Simply calls the "cleanup" method of "list" public API.
