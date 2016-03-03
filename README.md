@@ -1,13 +1,15 @@
-[spa]: https://en.wikipedia.org/wiki/Single-page_application
-[url]: http://rinaldi.io
+[custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
+[demo-url]: https://rafaelrinaldi.github.io/data-components
+[dist-url]: https://rawgit.com/rafaelrinaldi/data-components/master/dist/index.min.js
 [first-draft]: https://gist.github.com/rafaelrinaldi/cf0c3851070cd935ef55
 [module]: https://github.com/fnando/module
 [piecemaker]: https://github.com/jcemer/piecemaker
-[custom-elements]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements
+[spa]: https://en.wikipedia.org/wiki/Single-page_application
+[url]: http://rinaldi.io
 
-# data-components [![Unstable](https://img.shields.io/badge/stability-unstable-yellow.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
+# data-components [![Experimental](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
 
-> Simple structure to manage components for non [SPA][spa] projects
+> Tiny component structure for web applications
 
 ## Install
 
@@ -15,12 +17,80 @@
 $ npm install data-components --save
 ```
 
+<sup>Or you can simply copy and paste the [minified standalone version that lives under `dist/`][dist-url]</sup>
+
 ## Motivation
 
-There are plenty of options to architect a web application out there but most are complex or assume you're working on a [SPA][spa].
+There are plenty of options to architect a web application out there but most options often assume that you're working on a [SPA][spa]. That alone will add a lot of stuff that you might not want at all. Data binding, custom messaging system and virtual DOM to name a few.
+
+Sometimes you just need something simple to kick things off without having to worry about naming conventions and programming paradigms. That's how this library was born.
 I just wanted a simple and flexible structure for non [SPA][spa] projects, so I built this.
 
 ## Usage
+
+Let's implement the simplest todo list app.
+
+```html
+<!-- Create our todo list element passing some initial values -->
+<ul data-component="todo" data-values="foo,bar"></ul>
+
+<!-- Let's use a input field to read the user input -->
+<input data-component="input" placeholder="What to do?">
+```
+
+Ok, now that we have our markup in place, let's implement the application.
+
+```js
+// Todo component
+function Todo(el, options) {
+  this.el = el;
+  // Read from initial values
+  this.todos = options.values.split(',');
+  this.render();
+}
+
+// Add items to the todos list
+Todo.prototype.add = function (todo) {
+  this.todos.push(todo);
+  this.render();
+};
+
+// Render the todos list to the DOM
+Todo.prototype.render = function () {
+  this.el.innerHTML = this.todos.map(function (todo) {
+    return '<li>' + todo + '</li>';
+  }).join('');
+};
+
+// User input component
+function Input(el, options, sandbox) {
+  var todo = sandbox.get('todo');
+
+  el.focus();
+  el.addEventListener('keydown', function(e) {
+    // Submit value to "todo" component when hitting the enter key
+    if (e.keyCode === 13) {
+      todo.add(this.value);
+      this.value = '';
+      this.focus();
+    }
+  });
+}
+
+// Bootstrap components
+components({
+  todo: Todo,
+  input: Input
+});
+```
+
+![demo](./demo.gif)
+
+It works with just a few lines of code :tada:
+
+[Check out the demo page][demo-url] for a slightly more complex example.
+
+---
 
 ### Bootstrap
 
@@ -31,7 +101,7 @@ On your application entry point, simply call the component bootstrap function. H
 ```js
 const components = require('data-components');
 
-// Create a `UI` namespace
+// Create a `UI` namespace and expose it globally
 window.UI = components();
 ```
 
@@ -53,13 +123,41 @@ Now you need an implementation for your component:
 
 ```js
 class List {
-  constructor(node, options) {
+  constructor(node, options, sandbox) {
     console.log(`Bootstrapping list that toggle its visibility on "${options.toggle}" event`);
   }
 };
 ```
 
 It's that simple. On the "constructor" you'll receive a reference for the component markup and its options (passed along as data attributes).
+
+### Messaging
+
+Since all components receive a reference for their own sandbox, you can use it to make components talk to each other:
+
+```js
+class Beep {
+  constructor(node, options, sandbox) {
+    sandbox.get('bop').greet('Hello from beep!');
+  }
+}
+
+class Bop {
+  constructor(node, options, sandbox) {
+    sandbox.get('beep').greet('Hello from bop!');
+  }
+}
+
+const UI = components({
+  'beep': Beep,
+  'bop': Bop
+});
+
+//=> Hello from beep!
+//=> Hello from bop!
+```
+
+Maybe in the future we can think of adding a pub/sub mechanism but from whay I have used so far the current approach got me covered.
 
 ### Registering components
 
@@ -127,6 +225,10 @@ This is obviously no wildcard and really there are better options out there if y
 Ideally [Custom Elements][custom-elements] would solve this in a very elegant way but I haven't found any solution that don't rely either on hacky implementation or a giant runtime (looking at you Polymer).
 
 I started playing with this idea [a while ago][first-draft] and I'm already successfully using it in two production projects (with more than two developers besides myself).
+
+## FAQ
+
+Before creating an issue, please make sure you read the [FAQ](/FAQ.md) first.
 
 ## Related
 
