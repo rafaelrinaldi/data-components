@@ -5,7 +5,9 @@
 
 # Guide
 
-## Usage
+## How things work
+
+There's nothing fancy nor complex about `data-components`. Here I'll guide you through the concepts behind it and how to kick things off.
 
 ### Bootstrap
 
