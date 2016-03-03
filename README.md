@@ -38,39 +38,40 @@ Ok, now that we have our markup in place, let's implement the application.
 
 ```js
 // Todo component
-function Todo(el, options) {
-  this.el = el;
-  // Read from initial values
-  this.todos = options.values.split(',');
-  this.render();
+class Todo {
+  constructor(el, options) {
+    this.el = el;
+    // Read from initial values
+    this.todos = options.values.split(',');
+    this.render();
+  }
+
+  // Add items to the list
+  add(todo) {
+    this.todos.push(todo);
+    this.render();
+  }
+
+  // Render the list to the DOM
+  render() {
+    this.el.innerHTML = this.todos.map(todo => `<li>${todo}</li>`).join('');
+  }
 }
 
-// Add items to the todos list
-Todo.prototype.add = function (todo) {
-  this.todos.push(todo);
-  this.render();
-};
-
-// Render the todos list to the DOM
-Todo.prototype.render = function () {
-  this.el.innerHTML = this.todos.map(function (todo) {
-    return '<li>' + todo + '</li>';
-  }).join('');
-};
-
 // User input component
-function Input(el, options, sandbox) {
-  var todo = sandbox.get('todo');
+class Input {
+  constructor(el, options, sandbox) {
+    const todo = sandbox.get('todo');
 
-  el.focus();
-  el.addEventListener('keydown', function(e) {
     // Submit value to "todo" component when hitting the enter key
-    if (e.keyCode === 13) {
-      todo.add(this.value);
-      this.value = '';
-      this.focus();
-    }
-  });
+    el.addEventListener('keydown', e => {
+      if (e.keyCode === 13) {
+        todo.add(el.value);
+        el.value = '';
+        el.focus();
+      }
+    });
+  }
 }
 
 // Bootstrap components
