@@ -17,7 +17,7 @@ $ npm install data-components --save
 
 ## Motivation
 
-There are plenty of options to architect a web application out there but most options often assume that you're working on a [SPA][spa]. That alone will add a lot of stuff that you might not want at all. Data binding, custom messaging system and virtual DOM to name a few.
+There are plenty of options to architect a web application out there but most of them often assume that you're working on a [SPA][spa]. That alone will add a lot of stuff that you might not want at all. Data binding, custom messaging system and virtual DOM to name a few.
 
 Sometimes you just need something simple to kick things off without having to worry about naming conventions and programming paradigms. That's how this library was born.
 
