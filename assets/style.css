@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3A3A3A;
+  font-family: system, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Lucida Grande';
+}
+
+code {
+  color: #FE7958;
+  background-color: #FFF;
+  padding: 0.35rem;
+  border-radius: 3px;
+}
+
+input,
+button,
+li {
+  font-size: 1.25rem;
+}
+
+svg {
+  width: 5rem;
+  margin-left: 1rem;
+  transition: transform 0.15s ease-out;
+  cursor: pointer;
+}
+
+svg:hover {
+  transform: scale(1.35);
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+h3 {
+  text-align: center;
+}
+
+li,
+button {
+  cursor: pointer;
+}
+
+li {
+  transition: opacity 0.15s linear;
+}
+
+li::before {
+  color: #FE7958;
+  content: '◯';
+  font-size: 80%;
+  padding-right: 1rem;
+  text-decoration: none;
+}
+
+li.is-done {
+  opacity: 0.25;
+}
+
+li.is-done::before {
+  content: '◉';
+}
+
+input,
+button {
+  outline: 0;
+  border: 0;
+  padding: 0.45rem;
+  border-radius: 3px;
+}
+
+input {
+  border: 2px solid #DDD;
+  transition: border-color 0.15s linear;
+  width: 100%;
+  display: block;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+input:focus,
+input:hover {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+button {
+  border: 2px solid #FE7958;
+  background-color: #FE7958;
+  color: #FFF;
+  font-weight: bold;
+  transition: all 0.15s linear;
+}
+
+button:hover {
+  background-color: #FFF;
+  color: #FE7958;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 4rem 1.45rem;
+}
+
+.header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.details {
+  line-height: 2;
+  cursor: help;
+  padding: 1rem;
+  background-color: #EEE;
+  border-radius: 3px;
+}
