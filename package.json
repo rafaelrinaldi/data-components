@@ -21,7 +21,7 @@
     ]
   },
   "scripts": {
-    "gh-pages": "git checkout gh-pages && git merge master && git push && git checkout master",
+    "gh-pages": "git checkout gh-pages && git merge master && git push origin gh-pages && git checkout master",
     "build": "uglifyjs index.js -c -o dist/index.min.js --comments --stats && npm run meta",
     "meta": "node scripts/meta.js dist/index.min.js",
     "lint": "xo --space --env=browser",
