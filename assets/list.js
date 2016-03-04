@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 
-'use strict';
-
 /**
  * =============================================================================
  * List
  * =============================================================================
- * This module knows how to translate data into a list output (UI).
+ * This module knows how to translate data into a list output (UI)
  */
 
-class List {
+export default class List {
   constructor(el, options) {
     // Save a reference for the component element
     this.el = el;

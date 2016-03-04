@@ -1,14 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-'use strict';
-
-/**
- * Helper to remove an input value and set focus to it.
- */
-const reset = input => {
-  input.focus();
-  input.value = '';
-};
+import {reset} from './helpers';
 
 /**
  * =============================================================================
@@ -16,7 +8,7 @@ const reset = input => {
  * =============================================================================
  * This module is responsible for taking care of user actions
  */
-class Controls {
+export default class Controls {
   constructor(el, options, sandbox) {
     const buttons = el.querySelectorAll('button');
     const add = buttons[0];
