@@ -116,7 +116,7 @@ button:hover {
 .details {
   line-height: 2;
   cursor: help;
-  padding: 1rem;
+  padding: 1rem 0.35rem;
   background-color: #EEE;
   border-radius: 3px;
 }
