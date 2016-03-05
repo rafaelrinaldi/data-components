@@ -21,7 +21,7 @@
   /**
    * Own implementation of `Object.assign` that works in all browsers.
    * Note that it only does shallow copies.
-   **/
+   */
   function mixin(target /* ...sources */) {
     var from;
     var to = target;
@@ -46,20 +46,7 @@
 
   /**
    * Register a new component to the components store.
-   * For ES5 projects, use prototypes to simulate classes:
-   *
-   *    function MyComponent(node, options) {
-   *      // Bootstrap component
-   *    }
-   *
-   * In ES2015 you're can use actual classes:
-   *
-   *    class MyComponent {
-   *      constructor(node, options) {
-   *        // Bootstrap component
-   *      }
-   *    }
-   * */
+   */
   function register(component, implementation) {
     var newItem = {};
     newItem[component] = implementation;
@@ -74,7 +61,7 @@
     // Component options
     var exports = options && options.exports;
 
-    if (!isRegisteredComponent(id)) {
+    if (store.hasOwnProperty(id)) {
       console.warn('No implementation found for component "' + id + '"');
       return;
     }
@@ -87,14 +74,6 @@
     properties.sandbox[exports ? exports : id] = instance;
   }
 
-  function isRegisteredComponent(component) {
-    return Object
-              .keys(store)
-              .some(function (id) {
-                return id === component;
-              });
-  }
-
   // Lookup for components to bootstrap on the current context
   function update(sandbox) {
     var selector = '[data-component]';
@@ -104,7 +83,7 @@
       /**
       * `dataset` has its own type (`DOMStringMap`) so we convert it to an
       * actual `Object`.
-      **/
+      */
       var options = mixin({}, node.dataset);
 
       mount({
