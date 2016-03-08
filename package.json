@@ -17,7 +17,7 @@
   "scripts": {
     "gh-pages": "git checkout gh-pages && git merge master && git push origin gh-pages && git checkout master",
     "build": "uglifyjs index.js -c -m -o dist/index.min.js --comments --stats && npm run meta",
-    "meta": "node scripts/meta.js dist/index.min.js",
+    "meta": "node tools/meta.js dist/index.min.js",
     "test": "npm run lint"
   },
   "keywords": [
