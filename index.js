@@ -61,7 +61,7 @@
     // Component options
     var exports = options && options.exports;
 
-    if (store.hasOwnProperty(id)) {
+    if (!store[id]) {
       console.warn('No implementation found for component "' + id + '"');
       return;
     }
