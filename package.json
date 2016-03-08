@@ -18,7 +18,6 @@
     "gh-pages": "git checkout gh-pages && git merge master && git push origin gh-pages && git checkout master",
     "build": "uglifyjs index.js -c -m -o dist/index.min.js --comments --stats && npm run meta",
     "meta": "node scripts/meta.js dist/index.min.js",
-    "lint": "xo --space --env=browser",
     "test": "npm run lint"
   },
   "keywords": [
@@ -38,6 +37,6 @@
   ],
   "devDependencies": {
     "uglify-js": "^2.6.1",
-    "xo": "^0.12.1"
+    "xo": "^0.13.0"
   }
 }
