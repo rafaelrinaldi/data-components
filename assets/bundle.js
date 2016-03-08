@@ -262,7 +262,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   /**
    * Own implementation of `Object.assign` that works in all browsers.
    * Note that it only does shallow copies.
-   **/
+   */
   function mixin(target /* ...sources */) {
     var from;
     var to = target;
@@ -287,20 +287,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   /**
    * Register a new component to the components store.
-   * For ES5 projects, use prototypes to simulate classes:
-   *
-   *    function MyComponent(node, options) {
-   *      // Bootstrap component
-   *    }
-   *
-   * In ES2015 you're can use actual classes:
-   *
-   *    class MyComponent {
-   *      constructor(node, options) {
-   *        // Bootstrap component
-   *      }
-   *    }
-   * */
+   */
   function register(component, implementation) {
     var newItem = {};
     newItem[component] = implementation;
@@ -315,7 +302,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Component options
     var exports = options && options.exports;
 
-    if (!isRegisteredComponent(id)) {
+    if (!store[id]) {
       console.warn('No implementation found for component "' + id + '"');
       return;
     }
@@ -324,14 +311,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var Component = store[id];
     var instance = new Component(node, options, properties.sandbox);
 
+    // Handy flag to check if component was actually mounted
+    Component.isMounted = true;
+
     // Save the component instance to sandbox
     properties.sandbox[exports ? exports : id] = instance;
-  }
-
-  function isRegisteredComponent(component) {
-    return Object.keys(store).some(function (id) {
-      return id === component;
-    });
   }
 
   // Lookup for components to bootstrap on the current context
@@ -339,11 +323,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var selector = '[data-component]';
 
     // Loop through all `selector` occurrences and bootup components found
-    $(selector).forEach(function (node, index) {
+    $(selector)
+    // Bypass update if component was already mounted
+    .filter(function (node) {
+      var Component = store[node.dataset.component];
+      return Component && !Component.isMounted;
+    }).forEach(function (node, index) {
       /**
       * `dataset` has its own type (`DOMStringMap`) so we convert it to an
       * actual `Object`.
-      **/
+      */
       var options = mixin({}, node.dataset);
 
       mount({
