@@ -36,7 +36,7 @@
     "structure"
   ],
   "devDependencies": {
-    "uglify-js": "^2.6.1",
+    "uglify-js": "^2.6.2",
     "xo": "^0.13.0"
   }
 }
