@@ -1,7 +1,7 @@
 {
   "name": "data-components",
   "main": "index.js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Tiny component structure for web applications",
   "license": "MIT",
   "repository": "rafaelrinaldi/data-components",
