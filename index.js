@@ -61,7 +61,7 @@
     // Component options
     var exports = options && options.exports;
 
-    if (store.hasOwnProperty(id)) {
+    if (!store[id]) {
       console.warn('No implementation found for component "' + id + '"');
       return;
     }
@@ -69,6 +69,9 @@
     // Create new component instance
     var Component = store[id];
     var instance = new Component(node, options, properties.sandbox);
+
+    // Handy flag to check if component was actually mounted
+    Component.isMounted = true;
 
     // Save the component instance to sandbox
     properties.sandbox[exports ? exports : id] = instance;
@@ -79,19 +82,25 @@
     var selector = '[data-component]';
 
     // Loop through all `selector` occurrences and bootup components found
-    $(selector).forEach(function (node, index) {
-      /**
-      * `dataset` has its own type (`DOMStringMap`) so we convert it to an
-      * actual `Object`.
-      */
-      var options = mixin({}, node.dataset);
+    $(selector)
+      // Bypass update if component was already mounted
+      .filter(function (node) {
+        var Component = store[node.dataset.component];
+        return Component && !Component.isMounted;
+      })
+      .forEach(function (node, index) {
+        /**
+        * `dataset` has its own type (`DOMStringMap`) so we convert it to an
+        * actual `Object`.
+        */
+        var options = mixin({}, node.dataset);
 
-      mount({
-        sandbox: sandbox,
-        node: node,
-        index: index,
-        id: options.component
-      }, options);
+        mount({
+          sandbox: sandbox,
+          node: node,
+          index: index,
+          id: options.component
+        }, options);
     });
 
     return sandbox;
