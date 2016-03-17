@@ -1,5 +1,7 @@
 [demo-url]: https://rafaelrinaldi.github.io/data-components
 [dist-url]: https://raw.githubusercontent.com/rafaelrinaldi/data-components/master/dist/index.min.js
+[index]: https://github.com/rafaelrinaldi/data-components/blob/master/index.js
+[manifest]: https://github.com/rafaelrinaldi/data-components/blob/master/package.json
 [spa]: https://en.wikipedia.org/wiki/Single-page_application
 [url]: http://rinaldi.io
 
@@ -14,6 +16,13 @@ $ npm install data-components --save
 ```
 
 <sup>Or you can simply copy and paste the [minified standalone version that lives under `dist/`][dist-url]</sup>
+
+## Features
+
+* No need for a module bundler, it works in all browsers
+* [Zero dependencies][manifest]
+* No magic under the hood, [see it for yourself][index]
+* Small (1.2 KB minified)
 
 ## Motivation
 
@@ -73,7 +82,7 @@ class Input {
   }
 }
 
-// Bootstrap components
+// Bootstrap components (UMD build exposes `components()`)
 components({
   todo: Todo,
   input: Input
