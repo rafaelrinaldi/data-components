@@ -132,6 +132,13 @@
 
     // Loop through all `selector` occurrences and bootup components found
     $(selector)
+      // Bypass update if component was already mounted
+      .filter(function (node) {
+        var id = node.getAttribute('data-component');
+        var Component = store[id];
+
+        return Component && !Component.isMounted;
+      })
       .forEach(function (node, index) {
         /**
          * `dataset` has its own type (`DOMStringMap`) so we convert it to an
