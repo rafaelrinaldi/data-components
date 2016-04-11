@@ -44,6 +44,55 @@
     return to;
   }
 
+  // Converts a string to upper case (wrapper)
+  function toUpperCase(string) {
+    return string.toUpperCase();
+  }
+
+  // Converts a string to lower case (wrapper)
+  function toLowerCase(string) {
+    return string.toLowerCase();
+  }
+
+  // Converts a string to camelCase
+  function camelize(string) {
+    return string
+                .toString()
+                .trim()
+                .replace(/[\-_]/g, ' ')
+                .replace(/\s[a-z]/g, toUpperCase)
+                .replace(/\s+/g, '')
+                .replace(/^[A-Z]/g, toLowerCase);
+  }
+
+  // Export data attributes as a plain object with camelized keys
+  // Useful for IE dataset poor support
+  // See: https://github.com/rafaelrinaldi/data-attributes
+  function dataAttributes(node) {
+    var attributes = {};
+    var matchDataAttribute = /^data\-/;
+    var total = node.attributes.length;
+    var isDataAttribute;
+    var attribute;
+    var name;
+    var i = -1;
+
+    while (++i < total) {
+      attribute = node.attributes[i];
+      name = attribute.name;
+      isDataAttribute = matchDataAttribute.test(name);
+
+      if (isDataAttribute) {
+        name = name.replace(matchDataAttribute, '');
+        name = camelize(name);
+
+        attributes[name] = attribute.value;
+      }
+    }
+
+    return attributes;
+  }
+
   /**
    * Register a new component to the components store.
    */
@@ -83,17 +132,12 @@
 
     // Loop through all `selector` occurrences and bootup components found
     $(selector)
-      // Bypass update if component was already mounted
-      .filter(function (node) {
-        var Component = store[node.dataset.component];
-        return Component && !Component.isMounted;
-      })
       .forEach(function (node, index) {
         /**
-        * `dataset` has its own type (`DOMStringMap`) so we convert it to an
-        * actual `Object`.
-        */
-        var options = mixin({}, node.dataset);
+         * `dataset` has its own type (`DOMStringMap`) so we convert it to an
+         * actual `Object`.
+         */
+        var options = dataAttributes(node);
 
         mount({
           sandbox: sandbox,
@@ -101,7 +145,7 @@
           index: index,
           id: options.component
         }, options);
-    });
+      });
 
     return sandbox;
   }
