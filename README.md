@@ -5,7 +5,7 @@
 [spa]: https://en.wikipedia.org/wiki/Single-page_application
 [url]: http://rinaldi.io
 
-# data-components [![Experimental](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square)](/FAQ.md#what-does-unstable-mean-)
+# data-components
 
 > Tiny component structure for web applications
 
