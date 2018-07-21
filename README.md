@@ -102,3 +102,9 @@ For more detailed instructions on how the project works and how to use it, pleas
 ## License
 
 MIT © [Rafael Rinaldi][url]
+
+---
+
+<p align="center">
+  <a href="https://buymeacoff.ee/rinaldi" title="Buy me a coffee">Buy me a ☕</a>
+</p>
