@@ -9,6 +9,24 @@
 
 > Tiny component structure for web applications
 
+## Sponsors
+
+Thank you to all the sponsors for this project:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/lucasmotta">
+        <img src="https://avatars.githubusercontent.com/u/76673?v=3" width="100px;" alt=""/>
+        <br />
+        <sub>Lucas Motta</sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+[:handshake: Sponsor my open source work](https://github.com/sponsors/rafaelrinaldi)
+
 ## Install
 
 ```sh
