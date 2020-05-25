@@ -25,7 +25,7 @@ Thank you to all the sponsors for this project:
   </tr>
 </table>
 
-[:handshake: Sponsor my open source work](https://github.com/sponsors/rafaelrinaldi)
+[→ Sponsor my open source work](https://github.com/sponsors/rafaelrinaldi)
 
 ## Install
 
